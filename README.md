@@ -37,6 +37,31 @@ Open `http://<server>:3000`.
 
 After changing `.env`, run `docker compose up -d` again.
 
+### Run it on Tailscale
+
+`compose.tailscale.yml` runs the app as its own machine in your tailnet, at
+`https://matcentralen.<your-tailnet>.ts.net`. It gets no port on the server or the home network, so it is
+reachable only over Tailscale. Other apps on the same server can use the same pattern with their own names.
+
+Once, in the Tailscale admin console:
+
+1. On the **DNS** page, turn on **MagicDNS** and **HTTPS Certificates**.
+2. Under **Settings → Keys**, generate an auth key (single use, not ephemeral).
+
+Then, in `.env` on the server:
+
+```sh
+COMPOSE_FILE=compose.tailscale.yml
+TS_AUTHKEY=tskey-auth-...
+```
+
+and start it with `docker compose up -d --build`. The first page load takes a few seconds while the
+certificate is issued.
+
+Afterwards, open the new `matcentralen` machine in the admin console and choose **Disable key expiry**, or it
+drops off the tailnet after 180 days. The auth key is only used for the first start and can be removed from
+`.env`.
+
 ### Data and backup
 
 Everything is stored in one SQLite file, `/data/matcentralen.db`, in the `matcentralen-data` volume.

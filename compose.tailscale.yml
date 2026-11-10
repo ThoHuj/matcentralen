@@ -1,0 +1,45 @@
+# Kör Matcentralen som en egen maskin i ditt Tailscale-nät:
+#   https://matcentralen.<ditt-tailnet>.ts.net
+#
+# Appen får ingen port på servern eller i hemmanätverket; den nås bara via Tailscale.
+# Sätt COMPOSE_FILE=compose.tailscale.yml i .env så används den här filen automatiskt.
+
+services:
+  tailscale:
+    image: tailscale/tailscale:latest
+    container_name: matcentralen-tailscale
+    hostname: ${TS_HOSTNAME:-matcentralen}
+    restart: unless-stopped
+    environment:
+      # Behövs bara första gången; sedan ligger inloggningen kvar i volymen.
+      TS_AUTHKEY: ${TS_AUTHKEY:-}
+      TS_AUTH_ONCE: "true"
+      TS_HOSTNAME: ${TS_HOSTNAME:-matcentralen}
+      TS_STATE_DIR: /var/lib/tailscale
+      TS_SERVE_CONFIG: /config/serve.json
+    volumes:
+      - tailscale-state:/var/lib/tailscale
+      # Mappen monteras (inte filen) så att Tailscale märker ändringar.
+      - ./tailscale:/config:ro
+
+  matcentralen:
+    build: .
+    image: matcentralen
+    container_name: matcentralen
+    restart: unless-stopped
+    # Delar nätverk med Tailscale-behållaren, som skickar vidare https till port 3000.
+    network_mode: service:tailscale
+    depends_on:
+      tailscale:
+        condition: service_started
+        restart: true
+    environment:
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+      OPENROUTER_MODEL: ${OPENROUTER_MODEL:-anthropic/claude-sonnet-5.5}
+      DISCORD_WEBHOOK_URL: ${DISCORD_WEBHOOK_URL:-}
+    volumes:
+      - matcentralen-data:/data
+
+volumes:
+  matcentralen-data:
+  tailscale-state:
