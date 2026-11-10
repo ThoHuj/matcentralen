@@ -1,0 +1,981 @@
+/* Grundutseendet. Allt som skiljer teman åt kommer från variablerna i themes.css. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: light;
+  -webkit-text-size-adjust: 100%;
+}
+
+html[data-mode='dark'] {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  /* Färg och bild var för sig: ett tema kan ha flera bildlager, och då går de inte att skriva ihop. */
+  background-color: var(--bg);
+  background-image: var(--bg-image);
+  background-size: var(--bg-size);
+  background-attachment: fixed;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--font-size);
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+fieldset {
+  margin: 0;
+}
+
+h1,
+h2,
+.brand-name,
+.theme-name {
+  font-family: var(--font-head);
+  font-weight: var(--head-weight);
+  text-transform: var(--head-transform);
+  letter-spacing: var(--head-spacing);
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+h1 {
+  font-size: calc(1.6rem * var(--head-scale));
+}
+
+h2 {
+  font-size: calc(1.15rem * var(--head-scale));
+}
+
+a {
+  color: inherit;
+}
+
+code {
+  font-family: ui-monospace, monospace;
+  font-size: 0.9em;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.small {
+  font-size: 0.88rem;
+}
+
+/* --- Sidans ram -------------------------------------------------------------- */
+
+.app {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 0 1rem 3rem;
+}
+
+.topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  padding: 1.25rem 0 1.25rem;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+  text-decoration: none;
+}
+
+.brand-name {
+  display: inline-block;
+  font-size: calc(1.7rem * var(--head-scale));
+}
+
+.tagline {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.nav {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.75rem;
+  border: var(--bw) var(--border-style) transparent;
+  border-radius: var(--radius-sm);
+  /* Nollställer knappens eget utseende så att den ser ut som länkarna. */
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.nav-item:hover {
+  color: var(--text);
+}
+
+.nav-item[aria-current='page'] {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+/* På mobilen ligger menyn längst ned, inom tumavstånd. */
+@media (max-width: 40rem) {
+  .app {
+    padding-bottom: 6.5rem;
+  }
+
+  .nav {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 20;
+    justify-content: space-around;
+    padding: 0.35rem 0.5rem calc(0.35rem + env(safe-area-inset-bottom));
+    background: var(--bg);
+    border-top: var(--bw) var(--border-style) var(--border);
+  }
+
+  .nav-item {
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.1rem;
+    padding: 0.3rem;
+    font-size: 0.75rem;
+  }
+}
+
+.stack {
+  display: grid;
+  gap: 1rem;
+  /* Utan detta kan långa ord tvinga rutnätet bredare än skärmen. */
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.6rem;
+}
+
+.card {
+  padding: 1rem;
+  background: var(--surface);
+  border: var(--bw) var(--border-style) var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.card > h2 {
+  margin-bottom: 0.6rem;
+}
+
+.card .section-head:last-child,
+.modal .section-head {
+  margin-bottom: 0;
+}
+
+.empty {
+  padding: 1.5rem 1rem;
+  text-align: center;
+}
+
+.back,
+.source {
+  color: var(--muted);
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.back:hover,
+.source:hover {
+  color: var(--text);
+  text-decoration: underline;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* --- Knappar och fält -------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 2.6rem;
+  padding: 0.5rem 0.95rem;
+  background: var(--surface);
+  border: var(--bw) var(--border-style) var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.btn:hover {
+  border-color: var(--text);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.btn-primary,
+.btn-primary:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-text);
+}
+
+.btn-ghost {
+  background: transparent;
+  border-color: transparent;
+  color: var(--muted);
+}
+
+.btn-ghost:hover {
+  border-color: transparent;
+  color: var(--text);
+}
+
+.btn-danger,
+.btn-danger:hover {
+  color: var(--danger);
+}
+
+.btn-sm {
+  min-height: 2.1rem;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.9em;
+}
+
+.link {
+  padding: 0;
+  background: none;
+  border: 0;
+  color: var(--text);
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.input,
+.select {
+  width: 100%;
+  min-height: 2.6rem;
+  padding: 0.5rem 0.7rem;
+  background: var(--surface);
+  border: var(--bw) var(--border-style) var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font: inherit;
+  /* Under 16 px zoomar iOS in när fältet får fokus. */
+  font-size: max(1em, 16px);
+}
+
+.input::placeholder {
+  color: var(--muted);
+  opacity: 0.8;
+}
+
+.input[aria-invalid='true'] {
+  border-color: var(--danger);
+}
+
+textarea.input {
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.field {
+  display: grid;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.field-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.field-grow {
+  flex: 1;
+  min-width: 0;
+}
+
+.field-narrow {
+  width: 6rem;
+}
+
+.inline-field {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+}
+
+.inline-field .select {
+  width: auto;
+  flex: 1;
+  min-width: 0;
+}
+
+.seg {
+  display: inline-flex;
+  justify-self: start;
+  overflow: hidden;
+  background: var(--surface);
+  border: var(--bw) var(--border-style) var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.seg button {
+  padding: 0.45rem 0.85rem;
+  background: transparent;
+  border: 0;
+  color: var(--muted);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.seg button[aria-pressed='true'] {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+.stepper {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  overflow: hidden;
+  background: var(--surface);
+  border: var(--bw) var(--border-style) var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.stepper button {
+  width: 2.4rem;
+  height: 2.4rem;
+  background: transparent;
+  border: 0;
+  color: var(--text);
+  font: inherit;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.stepper button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.stepper-value {
+  min-width: 3.7rem;
+  text-align: center;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.stepper-value small {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.banner {
+  padding: 0.7rem 0.9rem;
+  background: var(--surface-2);
+  border: var(--bw) var(--border-style) var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.banner-error {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.banner-ok {
+  border-color: var(--accent-2);
+}
+
+.tag {
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* --- Inköpslistan ------------------------------------------------------------ */
+
+.plan {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.plan li {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.plan-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  font-weight: 600;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.plan-name:hover {
+  text-decoration: underline;
+}
+
+.quick-add {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.count {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.progress {
+  height: 0.4rem;
+  overflow: hidden;
+  background: var(--surface-2);
+  border-radius: 99px;
+}
+
+.progress > span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  border-radius: inherit;
+  transition: width 0.3s;
+}
+
+.cat {
+  margin-top: 1.25rem;
+}
+
+.cat-title {
+  margin-bottom: 0.45rem;
+  color: var(--muted);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.cat-emoji {
+  display: none;
+}
+
+.items {
+  padding: 0;
+  overflow: hidden;
+  background: var(--surface);
+  border: var(--bw) var(--border-style) var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  list-style: none;
+}
+
+.item + .item {
+  border-top: 1px var(--border-style) color-mix(in srgb, var(--border) 55%, transparent);
+}
+
+.item-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.5rem 0.4rem 0.5rem 0.8rem;
+}
+
+.check {
+  appearance: none;
+  display: grid;
+  place-content: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  margin: 0;
+  background: var(--surface);
+  border: max(2px, var(--bw)) solid var(--muted);
+  border-radius: var(--check-radius);
+  cursor: pointer;
+}
+
+.check::after {
+  content: '✓';
+  color: var(--accent-text);
+  font-size: 1rem;
+  line-height: 1;
+  transform: scale(0);
+  transition: transform 0.12s;
+}
+
+.check:checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.check:checked::after {
+  transform: scale(1);
+}
+
+.item-main {
+  min-width: 0;
+  padding: 0.25rem 0;
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.item-name {
+  display: block;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.item-sub {
+  display: block;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.item-amount {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.item.is-done .item-name,
+.item.is-done .item-amount {
+  color: var(--muted);
+  font-weight: 400;
+  text-decoration: line-through;
+}
+
+.item-toggle {
+  width: 2rem;
+  height: 2.2rem;
+  background: none;
+  border: 0;
+  color: var(--muted);
+  font: inherit;
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.item-toggle.is-open {
+  transform: rotate(90deg);
+}
+
+.item-detail {
+  display: grid;
+  gap: 0.8rem;
+  padding: 0.25rem 0.8rem 0.9rem 3.2rem;
+}
+
+.have {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.have-label {
+  width: 100%;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.have-amount {
+  width: 5.5rem;
+}
+
+.select.have-unit {
+  width: auto;
+}
+
+.sources {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0;
+  font-size: 0.9rem;
+  list-style: none;
+}
+
+.sources li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-height: 2.1rem;
+}
+
+@media (max-width: 40rem) {
+  .item-detail {
+    padding-left: 0.8rem;
+  }
+}
+
+/* --- Dialog och bekräftelser ------------------------------------------------- */
+
+.modal {
+  width: min(34rem, calc(100vw - 2rem));
+  max-height: min(85dvh, 42rem);
+  padding: 0;
+  background: var(--bg);
+  border: var(--bw) var(--border-style) var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+}
+
+.modal::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.modal-body {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem;
+}
+
+.picker {
+  display: grid;
+  padding: 0;
+  list-style: none;
+}
+
+.picker li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-height: 3rem;
+  border-bottom: 1px var(--border-style) color-mix(in srgb, var(--border) 55%, transparent);
+}
+
+.picker-name {
+  min-width: 0;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.picker-name .muted {
+  font-weight: 400;
+}
+
+.toast-area {
+  position: fixed;
+  inset: auto 0 5.5rem 0;
+  z-index: 30;
+  display: flex;
+  justify-content: center;
+  padding: 0 1rem;
+  pointer-events: none;
+}
+
+.toast {
+  padding: 0.6rem 1rem;
+  background: var(--text);
+  border-radius: var(--radius-sm);
+  color: var(--bg);
+  font-weight: 600;
+  box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.5);
+}
+
+/* --- Recept ------------------------------------------------------------------ */
+
+.recipe-list {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0;
+  list-style: none;
+}
+
+.recipe-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem 1rem;
+}
+
+.recipe-link {
+  display: grid;
+  flex: 1 1 12rem;
+  min-width: 0;
+  gap: 0.1rem;
+  text-decoration: none;
+}
+
+.recipe-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.recipe-link:hover .recipe-name {
+  text-decoration: underline;
+}
+
+.recipe-link .muted {
+  font-size: 0.88rem;
+}
+
+.recipe-planned {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.servings-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.adjust {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.85rem;
+  background: var(--surface-2);
+  border-radius: var(--radius-sm);
+}
+
+.ingredients {
+  padding: 0;
+  list-style: none;
+}
+
+.ingredients li {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  gap: 0.8rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px dashed color-mix(in srgb, var(--border) 70%, transparent);
+}
+
+.ingredients li:last-child {
+  border-bottom: 0;
+}
+
+.ing-amount {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.steps p + p {
+  margin-top: 0.6rem;
+}
+
+.notes {
+  white-space: pre-wrap;
+}
+
+/* --- Receptformuläret -------------------------------------------------------- */
+
+.ing-editor {
+  display: grid;
+  gap: 0.6rem;
+  justify-items: start;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+}
+
+.ing-editor legend {
+  padding: 0;
+  margin-bottom: 0.3rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.ing-rows {
+  display: grid;
+  gap: 0.7rem;
+  width: 100%;
+}
+
+/* Smal skärm: varans namn överst, sedan mängd, enhet och anteckning på raden under. */
+.ing-row {
+  display: grid;
+  grid-template-columns: 4.6rem 5.2rem minmax(0, 1fr) 2.2rem;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.ing-row .input,
+.ing-row .select {
+  padding-inline: 0.5rem;
+}
+
+.ing-name {
+  grid-column: 1 / 4;
+  grid-row: 1;
+  font-weight: 600;
+}
+
+.ing-del {
+  grid-column: 4;
+  grid-row: 1;
+  padding-inline: 0;
+}
+
+.ing-note {
+  grid-column: 3 / 5;
+}
+
+/* Bred skärm: allt på en rad, i den ordning ett recept brukar skrivas. */
+@media (min-width: 40rem) {
+  .ing-row {
+    grid-template-columns: 4.6rem 5.2rem minmax(0, 1fr) minmax(0, 1fr) 2.2rem;
+  }
+
+  .ing-name,
+  .ing-note,
+  .ing-del {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .ing-name {
+    font-weight: inherit;
+  }
+}
+
+/* --- Utseende ---------------------------------------------------------------- */
+
+.theme-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  gap: 1.25rem;
+}
+
+.theme-card {
+  display: grid;
+  justify-items: start;
+  gap: 0.6rem;
+  padding: 1rem;
+  background-color: var(--bg);
+  background-image: var(--bg-image);
+  background-size: var(--bg-size);
+  border: var(--bw) var(--border-style) var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--font-size);
+  text-align: left;
+  cursor: pointer;
+}
+
+.theme-card.is-active {
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.theme-name {
+  font-size: calc(1.25rem * var(--head-scale));
+}
+
+.theme-sample {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.4rem 0.6rem;
+  background: var(--surface);
+  border: var(--bw) var(--border-style) var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.theme-sample strong {
+  margin-left: auto;
+}
+
+.theme-check {
+  width: 1.1rem;
+  height: 1.1rem;
+  border: 2px solid var(--muted);
+  border-radius: var(--check-radius);
+}
+
+.theme-chip {
+  padding: 0.25rem 0.7rem;
+  background: var(--accent);
+  border-radius: var(--radius-sm);
+  color: var(--accent-text);
+  font-size: 0.85em;
+  font-weight: 600;
+}
+
+.theme-blurb {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

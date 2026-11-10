@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="sv" data-theme="minimal" data-mode="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Matcentralen</title>
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <script>
+      // Sätt tema innan sidan ritas så att den inte blinkar till i fel färger.
+      (function () {
+        try {
+          var root = document.documentElement;
+          var theme = localStorage.getItem('mc-theme');
+          var mode = localStorage.getItem('mc-mode') || 'auto';
+          var dark = mode === 'dark' || (mode === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches);
+          if (theme) root.dataset.theme = theme;
+          root.dataset.mode = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

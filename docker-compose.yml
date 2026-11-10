@@ -1,0 +1,18 @@
+services:
+  matcentralen:
+    build: .
+    image: matcentralen
+    container_name: matcentralen
+    restart: unless-stopped
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      # Värdena läses från .env bredvid den här filen (se .env.example).
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+      OPENROUTER_MODEL: ${OPENROUTER_MODEL:-anthropic/claude-sonnet-5.5}
+      DISCORD_WEBHOOK_URL: ${DISCORD_WEBHOOK_URL:-}
+    volumes:
+      - matcentralen-data:/data
+
+volumes:
+  matcentralen-data:

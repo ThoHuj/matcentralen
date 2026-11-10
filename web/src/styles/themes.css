@@ -1,0 +1,464 @@
+/*
+ * Teman. Varje tema sätter samma uppsättning variabler; base.css ritar allt
+ * med dem. Mörkt läge byter bara färgerna. Väljarna fungerar både på <html>
+ * och på ett enskilt element (förhandsvisningen under Utseende).
+ */
+
+/* --- Minimalistisk ---------------------------------------------------------- */
+
+[data-theme='minimal'] {
+  --bg: #fafaf9;
+  --bg-image: none;
+  --bg-size: auto;
+  --surface: #ffffff;
+  --surface-2: #f1f1ef;
+  --text: #141414;
+  --muted: #6f6f6b;
+  --border: #e4e4e0;
+  --accent: #141414;
+  --accent-text: #ffffff;
+  --accent-2: #141414;
+  --danger: #b3261e;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --bw: 1px;
+  --border-style: solid;
+  --shadow: none;
+  --check-radius: 50%;
+  --font-body: 'Inter Variable', system-ui, sans-serif;
+  --font-head: 'Inter Variable', system-ui, sans-serif;
+  --font-size: 16px;
+  --head-weight: 650;
+  --head-scale: 1;
+  --head-transform: none;
+  --head-spacing: -0.02em;
+}
+
+[data-mode='dark'][data-theme='minimal'],
+[data-mode='dark'] [data-theme='minimal'] {
+  --bg: #0f0f0f;
+  --surface: #171717;
+  --surface-2: #212121;
+  --text: #f1f1ef;
+  --muted: #9b9b96;
+  --border: #2b2b2b;
+  --accent: #f1f1ef;
+  --accent-text: #111111;
+  --accent-2: #f1f1ef;
+  --danger: #ff8a80;
+}
+
+/* --- Avantgarde ------------------------------------------------------------- */
+
+[data-theme='avant'] {
+  --bg: #f2efe6;
+  --yellow: #ffd21f;
+  --bg-image: radial-gradient(circle at calc(100% - 3rem) 3.5rem, var(--yellow) 0 4.5rem, transparent 4.55rem),
+    linear-gradient(115deg, transparent 0 80%, var(--accent-2) 80% 81%, transparent 81%);
+  --bg-size: auto;
+  --surface: #fffdf7;
+  --surface-2: #e9e4d6;
+  --text: #0b0b0b;
+  --muted: #55524a;
+  --border: #0b0b0b;
+  --accent: #e4190b;
+  --accent-text: #ffffff;
+  --accent-2: #1f3fd0;
+  --danger: #b00020;
+  --radius: 0px;
+  --radius-sm: 0px;
+  --bw: 3px;
+  --border-style: solid;
+  --shadow: 6px 6px 0 var(--text);
+  --check-radius: 0;
+  --font-body: 'Space Grotesk Variable', system-ui, sans-serif;
+  --font-head: 'Syne Variable', 'Space Grotesk Variable', sans-serif;
+  --font-size: 16px;
+  --head-weight: 700;
+  --head-scale: 0.82;
+  --head-transform: uppercase;
+  --head-spacing: -0.01em;
+}
+
+[data-mode='dark'][data-theme='avant'],
+[data-mode='dark'] [data-theme='avant'] {
+  --bg: #0b0b0b;
+  --yellow: #a88a00;
+  --surface: #161616;
+  --surface-2: #232323;
+  --text: #f2efe6;
+  --muted: #a9a59a;
+  --border: #f2efe6;
+  --accent: #ff4a3d;
+  --accent-text: #0b0b0b;
+  --accent-2: #6f8cff;
+  --danger: #ff8a80;
+  --shadow: 6px 6px 0 var(--accent);
+}
+
+[data-theme='avant'] .brand-name {
+  background: var(--accent);
+  color: var(--accent-text);
+  padding: 0.05em 0.35em;
+  transform: rotate(-2deg);
+  transform-origin: left center;
+}
+
+[data-theme='avant'] .cat-title {
+  display: inline-block;
+  background: var(--text);
+  color: var(--bg);
+  padding: 0.15rem 0.5rem;
+}
+
+[data-theme='avant'] .btn {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.85em;
+}
+
+[data-theme='avant'] .btn-primary:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--text);
+}
+
+/* --- Hackig ----------------------------------------------------------------- */
+
+[data-theme='hack'] {
+  --bg: #eef3ea;
+  --bg-image: none;
+  --bg-size: auto;
+  --surface: #f8fbf5;
+  --surface-2: #e2eadc;
+  --text: #0d3b1e;
+  --muted: #4d7359;
+  --border: #0d3b1e;
+  --accent: #0b6b2c;
+  --accent-text: #f1f7ee;
+  --accent-2: #8a5a00;
+  --danger: #a3271f;
+  --radius: 0px;
+  --radius-sm: 0px;
+  --bw: 1px;
+  --border-style: dashed;
+  --shadow: none;
+  --check-radius: 0;
+  --font-body: 'JetBrains Mono Variable', ui-monospace, monospace;
+  --font-head: 'JetBrains Mono Variable', ui-monospace, monospace;
+  --font-size: 15px;
+  --head-weight: 700;
+  --head-scale: 0.9;
+  --head-transform: lowercase;
+  --head-spacing: 0;
+}
+
+[data-mode='dark'][data-theme='hack'],
+[data-mode='dark'] [data-theme='hack'] {
+  --bg: #040804;
+  --surface: #081008;
+  --surface-2: #0d1a0d;
+  --text: #4dff88;
+  --muted: #2aa457;
+  --border: #1f7a3f;
+  --accent: #4dff88;
+  --accent-text: #031206;
+  --accent-2: #ffd166;
+  --danger: #ff6b6b;
+}
+
+/* Svaga svepränder som på en gammal bildskärm. */
+html[data-mode='dark'][data-theme='hack'] body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.16) 0 1px, transparent 1px 3px);
+}
+
+[data-mode='dark'] [data-theme='hack'] h1,
+[data-mode='dark'][data-theme='hack'] h1,
+[data-mode='dark'][data-theme='hack'] .brand-name {
+  text-shadow: 0 0 8px rgba(77, 255, 136, 0.45);
+}
+
+[data-theme='hack'] .brand-name::before {
+  content: '~/';
+  color: var(--muted);
+}
+
+[data-theme='hack'] .brand-name::after {
+  content: '▊';
+  margin-left: 0.1em;
+  animation: blink 1.1s steps(1) infinite;
+}
+
+[data-theme='hack'] h2::before {
+  content: '## ';
+  color: var(--muted);
+}
+
+[data-theme='hack'] .cat-title::before {
+  content: '# ';
+}
+
+[data-theme='hack'] .btn::before {
+  content: '[';
+}
+
+[data-theme='hack'] .btn::after {
+  content: ']';
+}
+
+[data-theme='hack'] .check::after {
+  content: 'x';
+  font-weight: 700;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* --- Renässans -------------------------------------------------------------- */
+
+[data-theme='renaissance'] {
+  --bg: #f1e6cc;
+  --bg-image: radial-gradient(ellipse at center, transparent 50%, rgba(120, 80, 30, 0.2) 100%);
+  --bg-size: auto;
+  --surface: #faf2dd;
+  --surface-2: #eadcb9;
+  --text: #2c1c10;
+  --muted: #75593a;
+  --border: #b99b66;
+  --accent: #7a1c22;
+  --accent-text: #faf2dd;
+  --accent-2: #a37b24;
+  --danger: #8f1d1d;
+  --radius: 4px;
+  --radius-sm: 3px;
+  --bw: 1px;
+  --border-style: solid;
+  --shadow: 0 0 0 3px var(--surface), 0 0 0 4px var(--border), 0 10px 22px -12px rgba(60, 35, 10, 0.55);
+  --check-radius: 3px;
+  --font-body: 'EB Garamond Variable', Georgia, serif;
+  --font-head: 'Cinzel Variable', 'EB Garamond Variable', serif;
+  --font-size: 18px;
+  --head-weight: 700;
+  --head-scale: 0.95;
+  --head-transform: none;
+  --head-spacing: 0.04em;
+}
+
+[data-mode='dark'][data-theme='renaissance'],
+[data-mode='dark'] [data-theme='renaissance'] {
+  --bg: #17110b;
+  --bg-image: radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, 0.5) 100%);
+  --surface: #211810;
+  --surface-2: #2c2116;
+  --text: #ead9b8;
+  --muted: #a58e69;
+  --border: #5d4830;
+  --accent: #c9a24b;
+  --accent-text: #1a1208;
+  --accent-2: #c9a24b;
+  --danger: #e08a7a;
+  --shadow: 0 0 0 3px var(--surface), 0 0 0 4px var(--border), 0 10px 22px -12px rgba(0, 0, 0, 0.8);
+}
+
+[data-theme='renaissance'] h2::before {
+  content: '❦ ';
+  color: var(--accent-2);
+  font-family: serif;
+  font-weight: 400;
+}
+
+[data-theme='renaissance'] .tagline {
+  font-style: italic;
+}
+
+[data-theme='renaissance'] .cat-title {
+  font-family: var(--font-head);
+  color: var(--accent);
+}
+
+[data-theme='renaissance'] .item-amount,
+[data-theme='renaissance'] .ing-amount {
+  font-style: italic;
+}
+
+/* --- Konstnärlig ------------------------------------------------------------ */
+
+[data-theme='art'] {
+  --bg: #fff7ef;
+  --bg-image: radial-gradient(40rem 30rem at 0% 0%, rgba(255, 170, 150, 0.5), transparent 60%),
+    radial-gradient(36rem 28rem at 100% 25%, rgba(120, 210, 200, 0.42), transparent 60%),
+    radial-gradient(40rem 30rem at 40% 100%, rgba(255, 215, 130, 0.5), transparent 60%);
+  --bg-size: auto;
+  --surface: rgba(255, 255, 255, 0.8);
+  --surface-2: rgba(245, 225, 215, 0.65);
+  --text: #2c2733;
+  --muted: #736b7d;
+  --border: #ead8cf;
+  --accent: #c8405a;
+  --accent-text: #ffffff;
+  --accent-2: #1f8a8a;
+  --danger: #b3261e;
+  --radius: 22px 30px 24px 32px / 30px 22px 32px 24px;
+  --radius-sm: 14px 18px 14px 20px / 18px 14px 20px 14px;
+  --bw: 1px;
+  --border-style: solid;
+  --shadow: 0 14px 34px -18px rgba(200, 64, 90, 0.45);
+  --check-radius: 46% 54% 50% 50% / 52% 46% 54% 48%;
+  --font-body: 'Fraunces Variable', Georgia, serif;
+  --font-head: 'Caveat Variable', 'Fraunces Variable', cursive;
+  --font-size: 16px;
+  --head-weight: 700;
+  --head-scale: 1.4;
+  --head-transform: none;
+  --head-spacing: 0;
+}
+
+[data-mode='dark'][data-theme='art'],
+[data-mode='dark'] [data-theme='art'] {
+  --bg: #1a1622;
+  --bg-image: radial-gradient(40rem 30rem at 0% 0%, rgba(190, 70, 120, 0.32), transparent 60%),
+    radial-gradient(36rem 28rem at 100% 25%, rgba(40, 150, 150, 0.3), transparent 60%),
+    radial-gradient(40rem 30rem at 40% 100%, rgba(110, 80, 200, 0.32), transparent 60%);
+  --surface: rgba(44, 37, 58, 0.8);
+  --surface-2: rgba(64, 54, 84, 0.65);
+  --text: #f4edf8;
+  --muted: #aa9fb9;
+  --border: #3d3552;
+  --accent: #ff8fa3;
+  --accent-text: #2a1018;
+  --accent-2: #6fd6d0;
+  --danger: #ff9a8f;
+  --shadow: 0 14px 34px -18px rgba(0, 0, 0, 0.8);
+}
+
+/* Ett penseldrag under namnet. */
+[data-theme='art'] .brand-name {
+  background: linear-gradient(transparent 62%, color-mix(in srgb, var(--accent) 38%, transparent) 62% 92%, transparent 92%);
+  padding: 0 0.2em;
+}
+
+[data-theme='art'] .btn-primary {
+  background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 55%, var(--accent-2)));
+  border-color: transparent;
+}
+
+[data-theme='art'] .cat-title {
+  font-family: var(--font-head);
+  font-size: 1.5rem;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--accent-2);
+}
+
+[data-theme='art'] .card,
+[data-theme='art'] .items {
+  backdrop-filter: blur(8px);
+}
+
+/* --- Rolig ------------------------------------------------------------------ */
+
+[data-theme='fun'] {
+  --bg: #fff1a8;
+  --bg-image: radial-gradient(circle, rgba(255, 95, 168, 0.2) 0 0.35rem, transparent 0.37rem);
+  --bg-size: 2.6rem 2.6rem;
+  --surface: #ffffff;
+  --surface-2: #ffe3f1;
+  --text: #2a1a52;
+  --muted: #6a5a94;
+  --border: #2a1a52;
+  --accent: #ff5fa8;
+  --accent-text: #2a1a52;
+  --accent-2: #18c7b0;
+  --danger: #d81e3f;
+  --radius: 22px;
+  --radius-sm: 14px;
+  --bw: 3px;
+  --border-style: solid;
+  --shadow: 4px 5px 0 var(--border);
+  --check-radius: 10px;
+  --font-body: 'Fredoka Variable', system-ui, sans-serif;
+  --font-head: 'Fredoka Variable', system-ui, sans-serif;
+  --font-size: 17px;
+  --head-weight: 700;
+  --head-scale: 1.1;
+  --head-transform: none;
+  --head-spacing: 0;
+}
+
+[data-mode='dark'][data-theme='fun'],
+[data-mode='dark'] [data-theme='fun'] {
+  --bg: #1c1136;
+  --bg-image: radial-gradient(circle, rgba(255, 255, 255, 0.07) 0 0.35rem, transparent 0.37rem);
+  --surface: #2a1a52;
+  --surface-2: #3a2670;
+  --text: #fff5cf;
+  --muted: #bfaeea;
+  --border: #fff5cf;
+  --accent: #ff7dba;
+  --accent-text: #1c1136;
+  --accent-2: #3fe0c9;
+  --danger: #ff8f8f;
+  --shadow: 4px 5px 0 #000000;
+}
+
+[data-theme='fun'] .brand-name {
+  transform: rotate(-3deg);
+  transform-origin: left center;
+  text-shadow: 3px 3px 0 var(--accent-2);
+}
+
+[data-theme='fun'] .brand:hover .brand-name {
+  animation: wiggle 0.5s ease-in-out;
+}
+
+[data-theme='fun'] .btn {
+  box-shadow: 2px 3px 0 var(--border);
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+
+[data-theme='fun'] .btn:hover {
+  transform: rotate(-2deg) scale(1.05);
+}
+
+[data-theme='fun'] .btn:active {
+  transform: translate(2px, 3px);
+  box-shadow: none;
+}
+
+[data-theme='fun'] .btn-ghost {
+  box-shadow: none;
+}
+
+[data-theme='fun'] .cat-emoji {
+  display: inline;
+}
+
+[data-theme='fun'] .check:checked {
+  animation: pop 0.3s ease-out;
+}
+
+[data-theme='fun'] .progress > span {
+  background: linear-gradient(90deg, #ff5fa8, #ffb13d, #18c7b0, #6f8cff);
+}
+
+@keyframes wiggle {
+  25% {
+    transform: rotate(-7deg);
+  }
+  75% {
+    transform: rotate(2deg);
+  }
+}
+
+@keyframes pop {
+  50% {
+    transform: scale(1.35) rotate(10deg);
+  }
+}
